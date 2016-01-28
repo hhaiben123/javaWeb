@@ -55,7 +55,7 @@ public class HomeController {
 	
 	
 	@RequestMapping(value = "cookieTest", method = RequestMethod.GET)
-	public void cookieTest(HttpServletRequest request, HttpServletResponse response) {
+	public void cookieTest(HttpServletRequest request, HttpServletResponse response)  throws IOException{
 		logger.info("Welcome home! The client locale is {}.", request);
 		logger.info("Welcome home! The client locale is {}.", response);
 		//获取Cookie
@@ -67,18 +67,15 @@ public class HomeController {
 		Cookie cookie = new Cookie("hhb", "hhbCookies");
 		response.addCookie(cookie);
 		PrintWriter pw;
-		try {
-			pw = response.getWriter();
-			pw.print("<html> <body> <h1> Hello,Cookie!</h1> </body> </html>");
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+
+		pw = response.getWriter();
+		pw.print("<html> <body> <h1> Hello,Cookie!</h1> </body> </html>");
+
 	}
 	
 	
 	@RequestMapping(value = "sessionTest", method = RequestMethod.GET)
-	public void sessionTest(HttpServletRequest request, HttpServletResponse response) {
+	public void sessionTest(HttpServletRequest request, HttpServletResponse response) throws IOException{
 		logger.info("Welcome home! The client locale is {}.", request);
 		logger.info("Welcome home! The client locale is {}.", response);
 //		//获取Cookie
@@ -97,49 +94,37 @@ public class HomeController {
 		response.addCookie(cookie);
 		
 		PrintWriter pw;
-		try {
-			pw = response.getWriter();
-			pw.print("<html> <body> <h1> Hello,Cookie!</h1> </body> </html>");
-			
-			// 如果HttpSeesion是新建的话
-			if (session.isNew()) {
-				pw.println("Hello,HttpSession! <br>The first response - SeesionId="
-	                    + sessionId + " <br>");
-				pw.println("Hello,HttpSession! <br>The first response - SeesionId="
-	                    + session.getAttribute("hhbSeesion") + " <br>");
-	        } else {
-	        	pw.println("Hello,HttpSession! <br>The second response - SeesionId="
-	                    + sessionId + " <br>");
-	        	session.removeAttribute("hhbSeesion"); 
-	        	pw.println("Hello,HttpSession! <br>The first response - SeesionId="
-	                    + session.getAttribute("hhbSeesion") + " <br>");
 
-	        	
-	        }
-
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		pw = response.getWriter();
+		pw.print("<html> <body> <h1> Hello,Cookie!</h1> </body> </html>");
+		
+		// 如果HttpSeesion是新建的话
+		if (session.isNew()) {
+			pw.println("Hello,HttpSession! <br>The first response - SeesionId="
+                    + sessionId + " <br>");
+			pw.println("Hello,HttpSession! <br>The first response - SeesionId="
+                    + session.getAttribute("hhbSeesion") + " <br>");
+        } else {
+        	pw.println("Hello,HttpSession! <br>The second response - SeesionId="
+                    + sessionId + " <br>");
+        	session.removeAttribute("hhbSeesion"); 
+        	pw.println("Hello,HttpSession! <br>The first response - SeesionId="
+                    + session.getAttribute("hhbSeesion") + " <br>");
+        }
 	}
 	
 	
 	@RequestMapping(value = "redisTest", method = RequestMethod.GET)
-	public void redisTest(HttpServletRequest request, HttpServletResponse response) {
+	public void redisTest(HttpServletRequest request, HttpServletResponse response) throws IOException{
 		User user = new User();
 		user.setUserId("1111");
 		user.setUserName("hhb");
 		user.setUserAdd("福建市");
 		useDto.saveUser(user);
-		PrintWriter pw;
-		try {
-			pw = response.getWriter();
-			pw.print("<html> <body> <h1> Hello Cookies </h1> </body> </html>");
-			//pw.print("<html> <body> <h1>" + "test:"+JSON.toJSONString(useDto.read("1111"))+"</h1> </body> </html>");
-			System.out.println(JSON.toJSONString(useDto.read("1111")));
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+
+		PrintWriter pw = response.getWriter();
+		pw.print("<html> <body> <h1> Hello Cookies </h1> </body> </html>");
+		System.out.println(JSON.toJSONString(useDto.read("1111")));
+
 	}
 }
