@@ -1,4 +1,4 @@
-package com.hhb.app.Dto;
+package com.hhb.app.dao;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisOperations;
@@ -8,9 +8,8 @@ import org.springframework.stereotype.Component;
 
 import com.hhb.app.entil.User;
 
-
 @Component
-public class UserDto {
+public class UserDaoImpl implements UserDao{
 	@Autowired
 	private RedisTemplate<String, User> redisTemplate;
 	

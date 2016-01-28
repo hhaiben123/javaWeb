@@ -1,4 +1,4 @@
-package com.hhb.app;
+package com.hhb.app.service;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -14,14 +14,13 @@ import javax.servlet.http.HttpSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.alibaba.fastjson.JSON;
-import com.hhb.app.Dto.UserDto;
+import com.hhb.app.dao.UserDao;
 import com.hhb.app.entil.User;
 
 /**
@@ -32,7 +31,7 @@ public class HomeController {
 	
 	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
 	@Autowired
-	private UserDto useDto;
+	private UserDao useDto;
 	/**
 	 * Simply selects the home view to render by returning its name.
 	 */
