@@ -3,14 +3,19 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns:redis="http://www.springframework.org/schema/redis"
 	xmlns:context="http://www.springframework.org/schema/context"
-	xsi:schemaLocation="http://www.springframework.org/schema/redis http://www.springframework.org/schema/redis/spring-redis-1.0.xsd
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xsi:schemaLocation="http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-3.1.xsd
+		http://www.springframework.org/schema/redis http://www.springframework.org/schema/redis/spring-redis-1.0.xsd
 		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
 	
 	<!-- Root Context: defines shared resources visible to all other web components -->
-	<context:component-scan base-package="com.hhb.app" annotation-config="true"/>   
+	<context:component-scan base-package="com.hhb.app">
+		<context:exclude-filter type="annotation"
+			expression="org.springframework.stereotype.Controller" />
+	</context:component-scan> 
 		<!-- 加载redis配置文件 -->
-	 <context:property-placeholder location="classpath*:/redis.properties"/> 
+	 <context:property-placeholder location="classpath*:/redis.properties" ignore-unresolvable="true"/> 
 	
 	<bean id="jedisPoolConfig" class="redis.clients.jedis.JedisPoolConfig">
 		<property name="maxTotal" value="10"></property>  
@@ -54,6 +59,40 @@
                 class="org.springframework.data.redis.serializer.JdkSerializationRedisSerializer" />  
         </property>   
      </bean>
+     
+  <!--    加载mysql配置文件 -->
+   <context:property-placeholder location="classpath*:/mysql.properties"  ignore-unresolvable="true"/> 
+   
+   
+   <!--    配置数据源 -->
+     <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource">
+        <property name="driverClassName" value="${jdbc.driver}" />
+        <property name="url" value="${jdbc.url}" />
+        <property name="username" value="${jdbc.username}" />
+        <property name="password" value="${jdbc.password}" />
+
+    </bean>
+    
+	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<!--dataSource属性指定要用到的连接池-->
+		<property name="dataSource" ref="dataSource" />
+		<!--configLocation属性指定mybatis的核心配置文件-->
+		 <property name="configLocation" value="classpath:configuration.xml" /> 
+		<!-- 所有配置的mapper文件 -->
+		<property name="mapperLocations" value="classpath*:/mybatis/mapepr/*.xml" />
+	</bean>
+
+	<!-- 扫描mybatis的mapper文件，和接口，产生代理对象 -->
+    <!-- DAO接口所在包名，Spring会自动查找其下的类 -->
+    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <property name="basePackage" value="com.hhb.app"></property>
+        <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"></property>
+    </bean>
+     
+    <bean id="transactionManager"
+		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="dataSource" />
+	</bean>
 </beans>
 
 
