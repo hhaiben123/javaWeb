@@ -30,4 +30,14 @@ public class mybatisController {
 		pw.print("<html> <body> <h1> Hello,mybatis!</h1> </body> </html>");
 		
 	}
+	
+	@RequestMapping(value="mybatisTest1", method=RequestMethod.GET) 
+	private void mybatisTest1(HttpServletRequest request, HttpServletResponse response)
+	throws IOException{
+		mybatisService.insertTest2();
+		PrintWriter pw;
+		pw = response.getWriter();
+		pw.print("<html> <body> <h1> Hello,mybatis!</h1> </body> </html>");
+		
+	}
 }
