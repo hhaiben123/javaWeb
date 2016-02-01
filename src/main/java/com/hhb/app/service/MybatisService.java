@@ -1,12 +1,18 @@
 package com.hhb.app.service;
 
 import java.util.Date;
+import java.util.List;
 
+import org.apache.ibatis.session.RowBounds;
+import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageInfo;
 import com.hhb.app.dao.BookMapper;
+import com.hhb.app.dto.BookCount;
 import com.hhb.app.entil.Book;
 
 
@@ -42,5 +48,24 @@ public class MybatisService {
 		bookMapper.insert(book2);
 		
 	}
+	
+	public List<Book> mybatisHelper(){
+		 String bookName = "童话故事";
+		 //RowBounds分页
+		 List<Book> books = bookMapper.selectByBookName(bookName,new RowBounds(2, 3));
+		 //获取总数
+		 PageInfo<Book> page = new PageInfo<Book>(books);
+		 Long sum = page.getTotal();
+		return books;
+	}
+	
+	public BookCount mybatisHelper2(){
+		
+		 String bookName = "童话故事";
+		 BookCount bookCount = bookMapper.selectCount(bookName,new RowBounds(1, 0));
+
+		 return bookCount;
+	}
+	
 
 }

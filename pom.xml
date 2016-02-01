@@ -134,6 +134,12 @@
             <artifactId>mybatis-ehcache</artifactId>
             <version>1.0.2</version>
         </dependency>
+        <!-- mybaits分页插件 -->
+        <dependency>
+		    <groupId>com.github.pagehelper</groupId>
+		    <artifactId>pagehelper</artifactId>
+		    <version>4.0.1</version>
+		</dependency>
         <!-- JDBC驱动 -->
         <dependency>
             <groupId>mysql</groupId>

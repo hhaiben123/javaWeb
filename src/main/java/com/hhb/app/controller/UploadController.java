@@ -2,16 +2,11 @@ package com.hhb.app.controller;
 
 import java.io.File;
 import java.io.IOException;
-import java.text.DateFormat;
 import java.util.Date;
-import java.util.Locale;
 
-import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletRequest;
 
-import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -25,7 +20,6 @@ public class UploadController {
 	
 	/*** 
      * 上传文件 用@RequestParam注解来指定表单上的file为MultipartFile 
-     *  
      * @param file 
      * @return 
      */
@@ -50,7 +44,7 @@ public class UploadController {
      */  
     private boolean saveFile(MultipartFile file) {  
         // 判断文件是否为空  
-        if (!file.isEmpty()) {  
+        if (!file.isEmpty()) {
             try {  
                 // 文件保存路径  
                 String filePath ="F:/"+new Date().getTime()+ file.getOriginalFilename();  

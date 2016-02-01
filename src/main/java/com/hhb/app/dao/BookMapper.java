@@ -1,5 +1,11 @@
 package com.hhb.app.dao;
 
+import java.util.List;
+
+import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.session.RowBounds;
+
+import com.hhb.app.dto.BookCount;
 import com.hhb.app.entil.Book;
 
 public interface BookMapper {
@@ -50,4 +56,8 @@ public interface BookMapper {
      * @mbggenerated Fri Jan 29 11:22:28 CST 2016
      */
     int updateByPrimaryKey(Book record);
+    
+    List<Book> selectByBookName(@Param("bookName")String bookName, RowBounds rowBounds);
+    
+    BookCount selectCount(@Param("bookName")String bookName, RowBounds rowBounds);
 }
