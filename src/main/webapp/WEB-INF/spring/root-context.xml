@@ -99,7 +99,8 @@
 		<property name="dataSource" ref="dataSource" />
 	</bean>
 	<!-- 对@Transactional注解进行加工处理,spring推荐在业务实现类上面加,而非接口 -->
-	<tx:annotation-driven  transaction-manager="transactionManager"/>
+	<tx:annotation-driven  transaction-manager="transactionManager"
+	 proxy-target-class="true"/>
 	
 	
 	<!-- 配置MultipartResolver 用于文件上传 使用spring的CommosMultipartResolver -->  

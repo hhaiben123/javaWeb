@@ -7,11 +7,11 @@ public interface UserDao {
 	/*
 	 * 保存用户
 	 */
-	public void saveUser(User user);
+	public void saveUser(String Id,Object object);
 	/*
 	 * 通过userId获取用户信息
 	 */
-	public User read(String userId);
+	public Object read(String userId);
 	
 	/*
 	 * 通过userId删除用户信息

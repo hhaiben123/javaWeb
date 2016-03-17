@@ -121,7 +121,7 @@ public class HomeController {
 		user.setUserId("1111");
 		user.setUserName("hhb");
 		user.setUserAdd("福建市");
-		UserDaoImpl.saveUser(user);
+		UserDaoImpl.saveUser(user.getUserId(),user);
 
 		PrintWriter pw = response.getWriter();
 		pw.print("<html> <body> <h1> Hello Cookies </h1> </body> </html>");

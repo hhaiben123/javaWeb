@@ -1,5 +1,7 @@
 package com.hhb.app.dao;
 
+import java.util.concurrent.TimeUnit;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisOperations;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -11,22 +13,22 @@ import com.hhb.app.entil.User;
 @Component
 public class UserDaoImpl implements UserDao{
 	@Autowired
-	private RedisTemplate<String, User> redisTemplate;
+	private RedisTemplate<String, Object> redisTemplate;
 	
-	public void saveUser(User user) {
-		ValueOperations<String, User> valueOper = redisTemplate.opsForValue();
-		valueOper.set(user.getUserId(), user);
+	public void saveUser(String Id,Object object) {
+		ValueOperations<String, Object> valueOper = redisTemplate.opsForValue();
+		valueOper.set(Id, object,30,TimeUnit.MINUTES);
 	}
 	
 	
-	  public User read(String userId) {  
-	        ValueOperations<String, User> valueOper = redisTemplate.opsForValue();  
-	        return valueOper.get(userId);  
+	  public Object read(String Id) {  
+	        ValueOperations<String, Object> valueOper = redisTemplate.opsForValue();  
+	        return valueOper.get(Id);  
 	    } 
 	  
-	   public void delete(String userId) {  
-	        ValueOperations<String, User> valueOper = redisTemplate.opsForValue();  
-	        RedisOperations<String,User>  RedisOperations  = valueOper.getOperations();  
-	        RedisOperations.delete(userId);  
+	   public void delete(String Id) {  
+	        ValueOperations<String, Object> valueOper = redisTemplate.opsForValue();  
+	        RedisOperations<String,Object>  RedisOperations  = valueOper.getOperations();  
+	        RedisOperations.delete(Id);  
 	    }
 }
