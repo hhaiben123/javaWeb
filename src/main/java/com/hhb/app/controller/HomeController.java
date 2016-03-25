@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.alibaba.fastjson.JSON;
+import com.hhb.app.Until.RedisClient;
 import com.hhb.app.dao.UserDao;
 import com.hhb.app.dao.UserDaoImpl;
 import com.hhb.app.entil.User;
@@ -121,11 +122,11 @@ public class HomeController {
 		user.setUserId("1111");
 		user.setUserName("hhb");
 		user.setUserAdd("福建市");
-		UserDaoImpl.saveUser(user.getUserId(),user);
-
+		RedisClient.setString("user", user);
+		Object object = RedisClient.getString("user");
 		PrintWriter pw = response.getWriter();
 		pw.print("<html> <body> <h1> Hello Cookies </h1> </body> </html>");
-		System.out.println(JSON.toJSONString(UserDaoImpl.read("1111")));
+		System.out.println(JSON.toJSONString(object));
 
 	}
 }

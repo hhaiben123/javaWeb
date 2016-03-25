@@ -27,7 +27,7 @@ public class RedisConfig {
     
     //构造函数
     public RedisConfig (){
-    	ResourceBundle rb = ResourceBundle.getBundle("application");
+    	ResourceBundle rb = ResourceBundle.getBundle("redis");
     	
     	String ips = rb.getString("redis.host");
     	if (ips!=null) {

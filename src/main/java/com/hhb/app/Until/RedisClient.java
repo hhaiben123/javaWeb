@@ -27,8 +27,6 @@ public class RedisClient {
             }
         } catch (Exception e) {  
             logger.error("Get jedis error : "+e);
-        }finally{
-            returnResource(jedis);
         }
         return jedis;
     }  
@@ -49,11 +47,14 @@ public class RedisClient {
      * @param value
      */
     public static void setString(String key ,Object object){
-        try {
+    	Jedis jedis = getJedis();
+    	try {
         	String value = JSON.toJSONString(object);
-            getJedis().set(key,value);
+        	jedis.set(key,value);
         } catch (Exception e) {
             logger.error("Set key error : "+e);
+        }finally{
+            returnResource(jedis);
         }
     }
      
@@ -64,11 +65,14 @@ public class RedisClient {
      * @param value
      */
     public static void setString(String key ,Object object, int seconds){
-        try {
+    	Jedis jedis = getJedis();
+    	try {
         	String value = JSON.toJSONString(object);
-            getJedis().setex(key, seconds, value);
+        	jedis.setex(key, seconds, value);
         } catch (Exception e) {
             logger.error("Set keyex error : "+e);
+        }finally{
+            returnResource(jedis);
         }
     }
      
@@ -78,10 +82,16 @@ public class RedisClient {
      * @return value
      */
     public static String getString(String key){
-        if(getJedis() == null || !getJedis().exists(key)){
-            return null;
+    	Jedis jedis = getJedis();
+    	try {
+    		if(jedis == null || !jedis.exists(key)){
+                return null;
+            }
+    		return getJedis().get(key);
+		} finally{
+            returnResource(jedis);
         }
-        return getJedis().get(key);
+        
     }
     
     /**
@@ -91,9 +101,15 @@ public class RedisClient {
      * @return value
      */
     public static Long detString(String key){
-        if(getJedis() == null || !getJedis().exists(key)){
-            return null;
+    	Jedis jedis = getJedis();
+    	try {
+    		if(jedis == null || !jedis.exists(key)){
+                return null;
+            }
+    		return getJedis().del(key);
+		}finally{
+            returnResource(jedis);
         }
-        return getJedis().del(key);
+        
     }
 }
